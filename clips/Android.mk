@@ -1,0 +1,46 @@
+##################################################################
+# author: Richard Luo                      
+# date:   2013-03-20 15:22:08
+#                                                                
+##################################################################
+
+LOCAL_PATH:= $(call my-dir)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := libclips
+
+include $(LOCAL_PATH)/sources.mk
+
+LOCAL_C_INCLUDES := \
+	$(LOCAL_PATH) \
+
+LOCAL_LDLIBS += -ldl -lrt -lpthread
+# LOCAL_CFLAGS := -x c++
+
+LOCAL_MODULE_TAGS := eng
+LOCAL_PRELINK_MODULE := false
+
+include $(BUILD_SHARED_LIBRARY)
+
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := clips
+
+LOCAL_SRC_FILES := main.cpp
+
+LOCAL_C_INCLUDES := \
+	$(LOCAL_PATH) \
+
+# LOCAL_CFLAGS += -x c++
+
+LOCAL_SHARED_LIBRARIES := libclips
+
+LOCAL_LDLIBS += -ldl -lrt -lpthread
+
+LOCAL_MODULE_TAGS := eng
+LOCAL_PRELINK_MODULE := false
+
+include $(BUILD_EXECUTABLE)
+
