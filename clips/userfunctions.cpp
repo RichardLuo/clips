@@ -47,6 +47,8 @@
 
 #include "clips.h"
 #include <math.h>
+#include <string>
+
 
 void UserFunctions(void);
 void EnvUserFunctions(void *);
@@ -257,18 +259,28 @@ class Foo {
             return FALSE;
         }
 
-        int count = 0;
         const long end = GetDOEnd(arg);
         void *multi_field_ptr = GetValue(arg);
-
         for (long i = GetDOBegin(arg); i <= end; i++) {
             if ((GetMFType(multi_field_ptr, i) == INSTANCE_NAME)) {
                 const char *name = ValueToString(GetMFValue(multi_field_ptr, i));
                 void *action = EnvFindInstance(environment, NULL, name, TRUE);
                 if (action != NULL) {
                     EnvDirectGetSlot(environment, action, "address", &arg);
-                    const char *str = DataObjectToString(environment, &arg);
-                    fprintf(stderr, "OKK: %ld is a INSTANCE_NAME, address %s \n", i, str);
+                    const std::string address = DataObjectToString(environment, &arg);
+                    EnvDirectGetSlot(environment, action, "method", &arg);
+                    const std::string method = DataObjectToString(environment, &arg);
+                    if (method == "set-on-off") {
+                        EnvDirectGetSlot(environment, action, "on-off-cmd", &arg);
+                        const std::string command = DataObjectToString(environment, &arg);
+                        fprintf(stderr, "OKK: method %s, address %s, on-off-cmd %s \n", method.c_str(), address.c_str(), command.c_str());
+                    } else if (method == "set-alert-level") {
+                        EnvDirectGetSlot(environment, action, "alert-level", &arg);
+                        const std::string alert_level = DataObjectToString(environment, &arg);
+                        fprintf(stderr, "OKK: method %s, address %s, alert_level %s \n", method.c_str(), address.c_str(), alert_level.c_str());
+                    } else {
+                        fprintf(stderr, "ERR: unknown-method %s, address %s \n", method.c_str(), address.c_str());
+                    }
                 } else {
                     fprintf(stderr, "ERR: action is NULL \n");
                 }

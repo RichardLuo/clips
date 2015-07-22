@@ -21,6 +21,12 @@ LOCAL_LDLIBS += -lrt
 LOCAL_MODULE_TAGS := eng
 LOCAL_PRELINK_MODULE := false
 
+ifneq ($(TARGET_SIMULATOR),true)
+LOCAL_C_INCLUDES += bionic		# very important!
+LOCAL_C_INCLUDES += external/stlport/stlport 
+LOCAL_SHARED_LIBRARIES += libstlport libdl
+endif
+
 include $(BUILD_SHARED_LIBRARY)
 
 
@@ -42,6 +48,12 @@ LOCAL_LDLIBS += -lrt
 
 LOCAL_MODULE_TAGS := eng
 LOCAL_PRELINK_MODULE := false
+
+ifneq ($(TARGET_SIMULATOR),true)
+LOCAL_C_INCLUDES += bionic		# very important!
+LOCAL_C_INCLUDES += external/stlport/stlport 
+LOCAL_SHARED_LIBRARIES += libstlport libdl
+endif
 
 include $(BUILD_EXECUTABLE)
 
