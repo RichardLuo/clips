@@ -262,17 +262,18 @@ class Foo {
         void *multi_field_ptr = GetValue(arg);
 
         for (long i = GetDOBegin(arg); i <= end; i++) {
-            if ((GetMFType(multi_field_ptr, i) == INSTANCE_ADDRESS)) {
-                void *action = ValueToPointer(GetMFValue(multi_field_ptr, i));
+            if ((GetMFType(multi_field_ptr, i) == INSTANCE_NAME)) {
+                const char *name = ValueToString(GetMFValue(multi_field_ptr, i));
+                void *action = EnvFindInstance(environment, NULL, name, TRUE);
                 if (action != NULL) {
                     EnvDirectGetSlot(environment, action, "address", &arg);
                     const char *str = DataObjectToString(environment, &arg);
-                    fprintf(stderr, "OKK: %ld is a INSTANCE_ADDRESS, address %s \n", i, str);
+                    fprintf(stderr, "OKK: %ld is a INSTANCE_NAME, address %s \n", i, str);
                 } else {
                     fprintf(stderr, "ERR: action is NULL \n");
                 }
             } else {
-                fprintf(stderr, "ERR: %ld is not a INSTANCE_ADDRESS \n", i);                
+                fprintf(stderr, "ERR: %ld is not a INSTANCE_NAME \n", i);                
             }
         }
 
