@@ -15,9 +15,9 @@ include $(LOCAL_PATH)/sources.mk
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH) \
 
-LOCAL_LDLIBS += -ldl -lrt -lpthread
-# LOCAL_CFLAGS := -x c++
-
+# LOCAL_LDLIBS += -ldl -lrt -lpthread
+# # LOCAL_CFLAGS := -x c++
+LOCAL_LDLIBS += -lrt
 LOCAL_MODULE_TAGS := eng
 LOCAL_PRELINK_MODULE := false
 
@@ -37,7 +37,8 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_SHARED_LIBRARIES := libclips
 
-LOCAL_LDLIBS += -ldl -lrt -lpthread
+# LOCAL_LDLIBS += -ldl -lrt -lpthread
+LOCAL_LDLIBS += -lrt
 
 LOCAL_MODULE_TAGS := eng
 LOCAL_PRELINK_MODULE := false

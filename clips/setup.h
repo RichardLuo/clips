@@ -99,7 +99,7 @@
 #endif
 
 #ifndef LINUX
-#define LINUX   0   /* Untested, presumably with gcc */
+#define LINUX   1   /* Untested, presumably with gcc */
 #endif
 
 #ifndef DARWIN
