@@ -6,6 +6,14 @@
 
 LOCAL_PATH:= $(call my-dir)
 
+include $(call get-mod-path, x-live)/paths.mk
+
+common_LOCAL_C_INCLUDES := \
+	$(path_zigbee) \
+
+common_LOCAL_SHARED_LIBRARIES := \
+	libZigbeeService
+
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libclips
@@ -13,11 +21,13 @@ LOCAL_MODULE := libclips
 include $(LOCAL_PATH)/sources.mk
 
 LOCAL_C_INCLUDES := \
-	$(LOCAL_PATH) \
+	$(common_LOCAL_C_INCLUDES)
 
-# LOCAL_LDLIBS += -ldl -lrt -lpthread
-# # LOCAL_CFLAGS := -x c++
+LOCAL_SHARED_LIBRARIES := \
+	$(common_LOCAL_SHARED_LIBRARIES)
+
 LOCAL_LDLIBS += -lrt
+
 LOCAL_MODULE_TAGS := eng
 LOCAL_PRELINK_MODULE := false
 
@@ -37,13 +47,12 @@ LOCAL_MODULE := clips
 LOCAL_SRC_FILES := main.cpp
 
 LOCAL_C_INCLUDES := \
-	$(LOCAL_PATH) \
+	$(common_LOCAL_C_INCLUDES)
 
-# LOCAL_CFLAGS += -x c++
+LOCAL_SHARED_LIBRARIES := \
+	libclips \
+	$(common_LOCAL_SHARED_LIBRARIES)
 
-LOCAL_SHARED_LIBRARIES := libclips
-
-# LOCAL_LDLIBS += -ldl -lrt -lpthread
 LOCAL_LDLIBS += -lrt
 
 LOCAL_MODULE_TAGS := eng
