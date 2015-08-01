@@ -12,7 +12,12 @@ common_LOCAL_C_INCLUDES := \
 	$(path_zigbee) \
 
 common_LOCAL_SHARED_LIBRARIES := \
-	libZigbeeService
+	libXEngine \
+	libLiveConsts \
+	libZigbeeService \
+	libutils \
+	libcutils \
+	liblog \
 
 include $(CLEAR_VARS)
 

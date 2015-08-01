@@ -48,8 +48,12 @@
 #include "clips.h"
 #include <math.h>
 #include <string>
+#include <vector>
 
+#include "consts/consts.h"
+#include "xengine/ActionDesc.h"
 #include "service/BindingManager.h"
+using namespace android;
 
 void UserFunctions(void);
 void EnvUserFunctions(void *);
@@ -262,6 +266,7 @@ class Foo {
 
         const long end = GetDOEnd(arg);
         void *multi_field_ptr = GetValue(arg);
+        std::vector<ActionDesc> action_list;
         for (long i = GetDOBegin(arg); i <= end; i++) {
             if ((GetMFType(multi_field_ptr, i) != INSTANCE_NAME)) {
                 fprintf(stderr, "ERR: %ld is not a INSTANCE_NAME \n", i);                
@@ -283,18 +288,38 @@ class Foo {
                 EnvDirectGetSlot(environment, action, "on-off-cmd", &arg);
                 const std::string command = DataObjectToString(environment, &arg);
                 fprintf(stderr, "OKK: method %s, address %s, on-off-cmd %s \n", method.c_str(), address.c_str(), command.c_str());
+                action_list.push_back(ActionDesc(VD_ON_OFF, address.c_str(), atoi(command.c_str())));
             } else if (method == "set-alert-level") {
                 EnvDirectGetSlot(environment, action, "alert-level", &arg);
                 const std::string alert_level = DataObjectToString(environment, &arg);
                 fprintf(stderr, "OKK: method %s, address %s, alert_level %s \n", method.c_str(), address.c_str(), alert_level.c_str());
+                action_list.push_back(ActionDesc(VD_ALERT_SET_LEVEL, address.c_str(), atoi(alert_level.c_str())));
             } else {
                 fprintf(stderr, "ERR: unknown-method %s, address %s \n", method.c_str(), address.c_str());
             }
-            android::BM::getInstance();
+            BM::getInstance().fireActions(action_list);
         }
 
         return TRUE;
     }
+
+    static intBool fire_binding(void *environment) {
+        const char *command = "fire-binding";
+        if (EnvArgCountCheck(environment, command, EXACTLY, 1) == -1) {
+            return FALSE;
+        }
+
+        DATA_OBJECT arg;
+        if (EnvArgTypeCheck(environment, command, 1, SYMBOL, &arg) == 0) {
+            return FALSE;
+        }
+        const std::string address = DOToString(arg);
+        // BM::getInstance().fireActions(action_list);
+        BM::getInstance().fireBinding(address);
+        return TRUE;
+    }
+
+
 
 };
 
@@ -305,6 +330,6 @@ void EnvUserFunctions(void *environment) {
     EnvDefineFunction2(environment, "cmfc", 'g', PTIEF Foo::CntMFChars, "CntMFChars", "11m");
     EnvDefineFunction2(environment, "ins-addr", 'g', PTIEF Foo::ins_addr_test, "ins_addr_test", "11x");
     EnvDefineFunction2(environment, "fire-actions", 'b', PTIEF Foo::fire_actions, "fire_actions", "11m");
-
+    EnvDefineFunction2(environment, "fire-binding", 'b', PTIEF Foo::fire_binding, "fire_binding", "11k");
 }
 
