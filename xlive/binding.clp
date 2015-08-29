@@ -11,14 +11,19 @@
   (slot address                         ;address of binding instance itself, nothing to do with device
         (type SYMBOL)
         (default ?NONE))
-  (multislot actions
-             (type INSTANCE)
-             (visibility public))
+  (slot enabled
+        (type SYMBOL)
+        (default ?NONE)
+        (visibility public)
+        (allowed-values true false))
   (slot status
         (type SYMBOL)
         (visibility public)
         (allowed-values waiting activated fired)
-        (default waiting)))
+        (default waiting))
+  (multislot actions
+             (type INSTANCE)
+             (visibility public)))
 
 ; (defmessage-handler BINDING::Binding delete before ()
 ;   (printout t "--> OpenCloseBinding delete before()" crlf)
@@ -57,6 +62,7 @@
           (src-address ?address&~none)
           (pressed-times ?times))
   ?binding <- (object (is-a KeypressBinding)
+                      (enabled true)
                       (src-address ?address)
                       (pressed-times ?times)
                       (actions $?actions))
@@ -88,13 +94,14 @@
   "BINDING::process-open-close-binding"
   (object (is-a OpenCloseEvent)
           (src-address ?address&~none)
-          (direction ?direction& opened | closed))
+          (direction ?direction&opened|closed))
   ?binding <- (object (is-a OpenCloseBinding)
+                      (enabled true)
                       (src-address ?address)
                       (direction ?dir&both|?direction))
   =>
   (send ?binding put-status activated)
-  (printout t "activated OpenCloseBinding src-address: " ?address crlf))
+  (printout t "activated OpenCloseBinding src-address: " ?address " binding-dir " ?dir crlf))
 
 
 (defclass BINDING::PirPanelBinding
@@ -117,6 +124,7 @@
                      (luminance ?dev-lum)
                      (pir-status ?pir-status))
   ?binding <- (object (is-a PirPanelBinding)
+                      (enabled true)
                       (src-address ?address)
                       (pir-status ?pir-status)
                       (luminance ?lum&: (< ?dev-lum ?lum)))
@@ -127,6 +135,7 @@
 (defrule BINDING::fire-activated-bindings
   "ACTION::fire-bindings"
   ?binding <- (object (is-a BINDING::Binding)
+                      (enabled true)
                       (status activated)
                       (address ?address))
   =>

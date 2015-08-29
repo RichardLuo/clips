@@ -9,6 +9,22 @@
         (type SYMBOL)
         (default none)))
 
+(defclass MAIN::OnOffStatusChangedEvent
+  "MAIN::OnOffStatusChangedEvent"
+  (is-a Event)
+  (slot on-off-status
+        (type SYMBOL)
+        (default ?NONE)
+        (allowed-values on off)))
+
+(defclass MAIN::AlertLevelChangedEvent
+  "MAIN::OnOffStatusChangedEvent"
+  (is-a Event)
+  (slot alert-level
+        (type INTEGER)
+        (default ?NONE)
+        (range 0 100)))
+
 (defclass MAIN::KeypressEvent
   "MAIN::KeypressEvent"
   (is-a Event)
@@ -45,9 +61,28 @@
         (default ?NONE)
         (range 0 1000)))
 
+
+(defclass MAIN::BindingSwitchRequest
+  "MAIN::BindingSwitchRequest"
+  (is-a Event)
+  (slot address
+        (type SYMBOL)
+        (default ?NONE))
+  (slot command
+        (type SYMBOL)
+        (default ?NONE)
+        (allowed-values enable disable)))
+
 (defclass MAIN::DeviceOfflineEvent
   "MAIN::DeviceOfflineEvent"
   (is-a Event))
+
+(defclass MAIN::UpdateBindingEvent
+  "MAIN::DeviceOfflineEvent"
+  (is-a Event)
+  (slot binding 
+        (type INSTANCE)
+        (default ?NONE)))
 
 (defrule MAIN::start-event
   "MAIN::start-event"
