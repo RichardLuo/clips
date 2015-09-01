@@ -14,7 +14,7 @@ common_LOCAL_C_INCLUDES := \
 common_LOCAL_SHARED_LIBRARIES := \
 	libXEngine \
 	libLiveConsts \
-	libBindingManager \
+	libZigbeeService \
 	libutils \
 	libcutils \
 	liblog \
@@ -42,7 +42,7 @@ LOCAL_C_INCLUDES += external/stlport/stlport
 LOCAL_SHARED_LIBRARIES += libstlport libdl
 endif
 
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)
 
 
 include $(CLEAR_VARS)
@@ -54,8 +54,10 @@ LOCAL_SRC_FILES := main.cpp
 LOCAL_C_INCLUDES := \
 	$(common_LOCAL_C_INCLUDES)
 
-LOCAL_SHARED_LIBRARIES := \
+LOCAL_STATIC_LIBRARIES := \
 	libclips \
+
+LOCAL_SHARED_LIBRARIES := \
 	$(common_LOCAL_SHARED_LIBRARIES)
 
 LOCAL_LDLIBS += -lrt

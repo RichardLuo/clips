@@ -15,7 +15,7 @@ LOCAL_SRC_FILES := clips_test1.cpp
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../
 
 LOCAL_SHARED_LIBRARIES := \
-	libclips \
+	libZigbeeService \
 	libutils \
 	libcutils \
 	libbinder \
@@ -26,7 +26,13 @@ LOCAL_PRELINK_MODULE := false
 
 LOCAL_MODULE_TAGS := eng
 
+LOCAL_STATIC_LIBRARIES := \
+	libclips \
+
+
 ifneq ($(TARGET_SIMULATOR),true)
+LOCAL_C_INCLUDES += bionic		# very important!
+LOCAL_C_INCLUDES += external/stlport/stlport 
 LOCAL_SHARED_LIBRARIES += libstlport libdl
 endif
 
