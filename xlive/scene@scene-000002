@@ -1,0 +1,14 @@
+{
+   "actions" : [
+      {
+         "addr" : "000d6f000180cd23-01",
+         "method" : "set_on_off",
+         "on_off_cmd" : 0
+      }
+   ],
+   "addr" : "scene-000002",
+   "alert_level" : 0,
+   "global" : true,
+   "name" : "离家"
+}
+
