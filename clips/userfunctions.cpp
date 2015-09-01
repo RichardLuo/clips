@@ -52,7 +52,7 @@
 
 #include "consts/consts.h"
 #include "xengine/ActionDesc.h"
-#include "service/BindingManager.h"
+#include "binding/BindingManager.h"
 using namespace android;
 
 void UserFunctions(void);
