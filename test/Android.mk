@@ -15,6 +15,7 @@ LOCAL_SRC_FILES := clips_test1.cpp
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../
 
 LOCAL_SHARED_LIBRARIES := \
+	libXEngine \
 	libZigbeeService \
 	libutils \
 	libcutils \
