@@ -6,7 +6,7 @@
   (import MAIN deftemplate initial-fact))
 
 (defclass BINDING::Binding
-  "to express the relationship of binding"
+  "super class for all concrete binding classes"
   (is-a USER)
   (slot address                         ;address of binding instance itself, nothing to do with device
         (type SYMBOL)
@@ -25,16 +25,16 @@
              (type INSTANCE)
              (visibility public)))
 
-; (defmessage-handler BINDING::Binding delete before ()
-;   (printout t "--> OpenCloseBinding delete before()" crlf)
-;   (bind ?len (length$ ?self:actions))
-;   (if (<= ?len 0)
-;       then
-;     (printout t "action list is empty!" crlf)
-;     (return))
-;   (printout t "before delete actions, len: " ?len crlf)
-;   (loop-for-count (?i 1 ?len) do
-;                   (send  (nth$ ?i ?self:actions) delete)))
+(defmessage-handler BINDING::Binding delete before ()
+  (printout t "--> Binding delete before ()" crlf)
+  (bind ?len (length$ ?self:actions))
+  (if (<= ?len 0)
+      then
+    (printout t "action list is empty!" crlf)
+    (return))
+  (printout t "before delete actions, len: " ?len crlf)
+  (loop-for-count (?i 1 ?len) do
+                  (send  (nth$ ?i ?self:actions) delete)))
 
 ; (defmessage-handler BINDING::Binding set-passed ()
 ;   (printout t "--> BINDING::Binding set-passed()" crlf)
