@@ -6,10 +6,10 @@
 ; (watch rules)
 ; (watch agenda)
 
-(load "/zb/clips/main.clp")
+(load "/data/zb/clips/main.clp")
 
-(load "/zb/clips/device.clp")
-(load "/zb/clips/binding.clp")
+(load "/data/zb/clips/device.clp")
+(load "/data/zb/clips/binding.clp")
 
 (make-instance pir1 of DEVICE::PirPanel
                (address AAA)
