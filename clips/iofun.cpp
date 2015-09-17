@@ -139,8 +139,11 @@ globle void IOFunctionDefinitions(
 
 #if IO_FUNCTIONS
    IOFunctionData(theEnv)->useFullCRLF = FALSE;
-   IOFunctionData(theEnv)->locale = (SYMBOL_HN *) EnvAddSymbol(theEnv,setlocale(LC_ALL,NULL));
-   IncrementSymbolCount(IOFunctionData(theEnv)->locale);
+   const char *locale = setlocale(LC_ALL,NULL);
+   if (locale != NULL) {
+       IOFunctionData(theEnv)->locale = (SYMBOL_HN *) EnvAddSymbol(theEnv,locale);
+       IncrementSymbolCount(IOFunctionData(theEnv)->locale);
+   }
 #endif
 
 #if ! RUN_TIME

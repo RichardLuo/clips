@@ -26,7 +26,7 @@ static int test_devices() {
     /* and generic functions necessary for handling complex */
     /* numbers. */
     /*=======================================================*/
-    LOG_IF_RETURN(!EnvLoad(theEnv, "/zb/clips/devices.clp"), "ERR: on EnvLoad");
+    LOG_IF_RETURN(!EnvLoad(theEnv, "/data/zb/clips/devices.clp"), "ERR: on EnvLoad");
 
     /*=========================================================*/
     /* Create two complex numbers. Message-passing is used to */
@@ -66,7 +66,7 @@ static void test_manipulate_object() {
     /* and generic functions necessary for handling complex */
     /* numbers. */
     /*=======================================================*/
-    EnvLoad(theEnv, "/zb/clips/complex.clp");
+    EnvLoad(theEnv, "/data/zb/clips/complex.clp");
 
     /*=========================================================*/
     /* Create two complex numbers. Message-passing is used to */
@@ -127,10 +127,10 @@ static void test_manipulate_object() {
 static int test_bindings() {
     void *theEnv = CreateEnvironment();
     const char *load_files[] = {
-        "/zb/clips/main.clp",
-        "/zb/clips/device.clp",
-        "/zb/clips/action.clp",
-        "/zb/clips/binding.clp",
+        "/data/zb/clips/main.clp",
+        "/data/zb/clips/device.clp",
+        "/data/zb/clips/action.clp",
+        "/data/zb/clips/binding.clp",
     };
     for (size_t i = 0;
          i < ARRAY_SIZE(load_files); ++i) {

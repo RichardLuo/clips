@@ -8,8 +8,8 @@ LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
 
-PATH_ZB_CONFIGS := $(PRODUCT_OUT)/root/zb/configs
-PATH_CLIPS_SOURCE := $(PRODUCT_OUT)/root/zb/clips
+PATH_ZB_CONFIGS := $(PRODUCT_OUT)/data/zb/configs
+PATH_CLIPS_SOURCE := $(PRODUCT_OUT)/data/zb/clips
 
 $(shell mkdir -p $(PATH_ZB_CONFIGS))
 $(shell mkdir -p $(PATH_CLIPS_SOURCE))

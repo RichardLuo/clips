@@ -4,10 +4,10 @@
 (watch rules)
 (watch instances)
 
-(load "/zb/clips/main.clp")
-(load "/zb/clips/device.clp")
-(load "/zb/clips/action.clp")
-(load "/zb/clips/binding.clp")
+(load "/data/zb/clips/main.clp")
+(load "/data/zb/clips/device.clp")
+(load "/data/zb/clips/action.clp")
+(load "/data/zb/clips/binding.clp")
 
 (definstances devices
   (plug1 of DEVICE::SmartPlug
