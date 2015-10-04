@@ -59,7 +59,7 @@
   (slot luminance
         (type INTEGER)
         (default ?NONE)
-        (range 0 1000)))
+        (range -1 1000)))
 
 
 (defclass MAIN::BindingSwitchRequest

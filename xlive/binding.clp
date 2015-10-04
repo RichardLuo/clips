@@ -114,8 +114,8 @@
         (allowed-values safe alarm))
   (slot luminance
         (type INTEGER)
-        (default 0)
-        (range 0 1000)))
+        (default -1)
+        (range -1 1000)))
 
 (defrule BINDING::process-pir-binding
   "BINDING::process-pir-binding"
