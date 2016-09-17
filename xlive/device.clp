@@ -61,6 +61,14 @@
         (allowed-values opened closed)
         (create-accessor read-write)))
 
+(defrule DEVICE::print-occupancy
+  "print-occupancy"
+  ?event <- (object (is-a OccupancyEvent)
+                    (src-address ?address&~none)
+                    (pir-status ?new-status))
+  =>
+  (printout t "got occupancy from " ?address  " status " ?new-status crlf))
+
 (defrule DEVICE::update-occupancy
   "update-occupancy"
   ?event <- (object (is-a OccupancyEvent)
@@ -68,12 +76,12 @@
                     (pir-status ?new-status))
   ?device <- (object (is-a PirPanel)
                      (address ?address)
+                     (luminance ?dev-lum)
                      (pir-status ?old-status&~?new-status))
   =>
-  (send ?event delete)
   (send ?device put-pir-status ?new-status)
-  (printout t "updated occupancy to: " ?new-status
-            " src-address: " ?address crlf))
+  (printout t "updated occupancy from " ?old-status  " to " ?new-status
+            " dev-lum: " ?dev-lum " src-address: " ?address crlf))
 
 (defrule DEVICE::update-luminance
   "update-luminance"
@@ -84,7 +92,6 @@
                      (address ?address)
                      (luminance ?old-lum&~?new-lum))
   =>
-  (send ?event delete)
   (send ?device put-luminance ?new-lum)
   (printout t "updated lum to: " ?new-lum " src-address: " ?address crlf))
 
