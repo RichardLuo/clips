@@ -3,8 +3,8 @@
 (watch facts)
 (watch rules)
 (watch agenda)
-(load "/data/zb/clips/devices.clp")
-(load "/data/zb/clips/rules.clp")
+(load "/zb/clips/devices.clp")
+(load "/zb/clips/rules.clp")
 (make-instance pir1 of PirPanel
  (status available)
  (pir-status safe))

@@ -23,7 +23,7 @@
 
 ; (access-people (instance-address [p1]))
 
-; (load "/data/zb/clips/cmfc.clp")
+; (load "/zb/clips/cmfc.clp")
 
 
 

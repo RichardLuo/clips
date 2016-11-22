@@ -114,7 +114,7 @@
         (allowed-values safe alarm))
   (slot luminance
         (type INTEGER)
-        (default 0)
+        (default 1000000)
         (range 0 1000000)))
 
 (defrule BINDING::process-pir-binding
@@ -132,6 +132,24 @@
   (send ?binding put-status activated)
   (printout t "activated a PirPanelBinding, src-address: " ?address 
             " binding-luminance " ?lum 
+            " device-luminance  " ?dev-lum crlf))
+
+
+(defrule BINDING::debug-pir-binding
+  "BINDING::debug-pir-binding"
+  ?device <- (object (is-a PirPanel)
+                     (address ?address)
+                     (luminance ?dev-lum)
+                     (pir-status ?pir-status))
+  ?binding <- (object (is-a PirPanelBinding)
+                      (enabled ?enabled)
+                      (src-address ?address)
+                      (pir-status ?pir-status)
+                      (luminance ?binding-lum))
+  =>
+  (printout t "debug-pir-binding, src-address: " ?address 
+            " pir-status " ?pir-status
+            " binding-luminance " ?binding-lum
             " device-luminance  " ?dev-lum crlf))
 
 (defrule BINDING::fire-activated-bindings

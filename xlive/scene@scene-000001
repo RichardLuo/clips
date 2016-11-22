@@ -1,11 +1,9 @@
 {
-   "actions" : [
-      {
-         "addr" : "000d6f000180cd23-01",
-         "method" : "set_on_off",
-         "on_off_cmd" : 1
-      }
-   ],
+   "type" : 2,
+   "dev_type" : 3,
+   "area" : 0,
+   "is_new" : true,
+   "actions" : null,
    "addr" : "scene-000001",
    "alert_level" : 0,
    "global" : true,
