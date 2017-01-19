@@ -48,7 +48,11 @@
 (defclass MAIN::OccupancyEvent
   "MAIN::OccupancyEvent, always form PirPanel device"
   (is-a Event)
-  (slot pir-status
+  (slot side
+        (type SYMBOL)
+        (allowed-values left right)
+        (default ?NONE))
+  (slot occupancy
         (type SYMBOL)
         (allowed-values safe alarm)
         (default ?NONE)))

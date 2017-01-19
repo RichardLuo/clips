@@ -43,10 +43,20 @@
   (is-a Device)
   (slot luminance
         (type INTEGER)
-        (default -1)
-        (range -1 1000)
+        (default -200)
+        (range -200 10000)
         (create-accessor read-write))
-  (slot pir-status
+  (slot temperature
+        (type INTEGER)
+        (default -100)
+        (range -100 200)
+        (create-accessor read-write))
+  (slot occupancy-left
+        (type SYMBOL)
+        (default safe)
+        (allowed-values safe alarm)
+        (create-accessor read-write))
+  (slot occupancy-right
         (type SYMBOL)
         (default safe)
         (allowed-values safe alarm)
@@ -65,23 +75,40 @@
   "print-occupancy"
   ?event <- (object (is-a OccupancyEvent)
                     (src-address ?address&~none)
-                    (pir-status ?new-status))
+                    (side ?from-side))
+                    (occupancy ?new-occupancy)
   =>
-  (printout t "got occupancy from " ?address  " status " ?new-status crlf))
+  (printout t "got occupancy from " ?address  " occupancy " ?new-occupancy " side " ?from-side crlf))
 
-(defrule DEVICE::update-occupancy
-  "update-occupancy"
+(defrule DEVICE::update-occupancy-left
+  "update-occupancy-left"
   ?event <- (object (is-a OccupancyEvent)
                     (src-address ?address&~none)
-                    (pir-status ?new-status))
+                    (side left)
+                    (occupancy ?new-left))
   ?device <- (object (is-a PirPanel)
                      (address ?address)
-                     (luminance ?dev-lum)
-                     (pir-status ?old-status&~?new-status))
+                     (luminance ?lumi)
+                     (occupancy-left ?old-left&~?new-left))
   =>
-  (send ?device put-pir-status ?new-status)
-  (printout t "updated occupancy from " ?old-status  " to " ?new-status
-            " dev-lum: " ?dev-lum " src-address: " ?address crlf))
+  (send ?device put-occupancy-left ?new-left)
+  (printout t "updated occupancy-left from " ?old-left  " to " ?new-left
+            " dev-lum: " ?lumi " src-uuid: " ?address crlf))
+
+(defrule DEVICE::update-occupancy-right
+  "update-occupancy-right"
+  ?event <- (object (is-a OccupancyEvent)
+                    (src-address ?address&~none)
+                    (side right)
+                    (occupancy ?new-right))
+  ?device <- (object (is-a PirPanel)
+                     (address ?address)
+                     (luminance ?lumi)
+                     (occupancy-right ?old-right&~?new-right))
+  =>
+  (send ?device put-occupancy-right ?new-right)
+  (printout t "updated occupancy-right from " ?old-right  " to " ?new-right
+            " dev-lum: " ?lumi " src-uuid: " ?address crlf))
 
 (defrule DEVICE::update-luminance
   "update-luminance"

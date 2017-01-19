@@ -108,49 +108,62 @@
   "BINDING::PirPanelBinding"
   (is-a Binding)
   (slot src-address)
-  (slot pir-status
-        (type SYMBOL)
-        (default safe)
-        (allowed-values safe alarm))
   (slot luminance
         (type INTEGER)
-        (default 1000000)
-        (range 0 1000000)))
+        (default 10000)
+        (range -200 10000)))
 
-(defrule BINDING::process-pir-binding
-  "BINDING::process-pir-binding"
+(defrule BINDING::process-pir-binding-left
+  "BINDING::process-pir-binding-left"
   ?device <- (object (is-a PirPanel)
-                     (address ?address)
-                     (luminance ?dev-lum)
-                     (pir-status ?pir-status))
+                     (address ?dev-uuid)
+                     (luminance ?dev-lumi)
+                     (occupancy-left alarm))
   ?binding <- (object (is-a PirPanelBinding)
                       (enabled true)
-                      (src-address ?address)
-                      (pir-status ?pir-status)
-                      (luminance ?lum&: (<= ?dev-lum ?lum)))
+                      (src-address ?dev-uuid)
+                      (luminance ?binding-lumi&: (<= ?dev-lumi ?binding-lumi)))
   =>
   (send ?binding put-status activated)
-  (printout t "activated a PirPanelBinding, src-address: " ?address 
-            " binding-luminance " ?lum 
-            " device-luminance  " ?dev-lum crlf))
+  (printout t "activated a PirPanelBinding of left larm with dev-uuid: " ?dev-uuid
+            " device-lumi  " ?dev-lumi
+            " binding-lumi " ?binding-lumi crlf))
 
+(defrule BINDING::process-pir-binding-right
+  "BINDING::process-pir-binding-right"
+  ?device <- (object (is-a PirPanel)
+                     (address ?dev-uuid)
+                     (luminance ?dev-lumi)
+                     (occupancy-right alarm))
+  ?binding <- (object (is-a PirPanelBinding)
+                      (enabled true)
+                      (src-address ?dev-uuid)
+                      (luminance ?binding-lumi&: (<= ?dev-lumi ?binding-lumi)))
+  =>
+  (send ?binding put-status activated)
+  (printout t "activated a PirPanelBinding of right larm with dev-uuid: " ?dev-uuid
+            " device-lumi  " ?dev-lumi
+            " binding-lumi " ?binding-lumi crlf))
 
 (defrule BINDING::debug-pir-binding
   "BINDING::debug-pir-binding"
   ?device <- (object (is-a PirPanel)
-                     (address ?address)
+                     (address ?dev-uuid)
                      (luminance ?dev-lum)
-                     (pir-status ?pir-status))
+                     (occupancy-left ?dev-occup-left)
+                     (occupancy-right ?dev-occup-right))
   ?binding <- (object (is-a PirPanelBinding)
-                      (enabled ?enabled)
-                      (src-address ?address)
-                      (pir-status ?pir-status)
+                      (enabled true)
+                      (src-address ?dev-uuid)
                       (luminance ?binding-lum))
   =>
-  (printout t "debug-pir-binding, src-address: " ?address 
-            " pir-status " ?pir-status
-            " binding-luminance " ?binding-lum
-            " device-luminance  " ?dev-lum crlf))
+  (printout t
+            "debug-pir-binding"
+            " dev-uuid: " ?dev-uuid
+            " dev-lum " ?dev-lum
+            " dev-occupancy-left " ?dev-occup-left
+            " dev-occupancy-right " ?dev-occup-right
+            " binding-lum " ?binding-lum crlf))
 
 (defrule BINDING::fire-activated-bindings
   "ACTION::fire-bindings"
