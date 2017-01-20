@@ -75,17 +75,18 @@
   "print-occupancy"
   ?event <- (object (is-a OccupancyEvent)
                     (src-address ?address&~none)
-                    (side ?from-side))
-                    (occupancy ?new-occupancy)
+                    (occupancy-left ?left)
+                    (occupancy-right ?right))
   =>
-  (printout t "got occupancy from " ?address  " occupancy " ?new-occupancy " side " ?from-side crlf))
+  (printout t "got occupancy from " ?address
+            " occupancy-left " ?left
+            " occupancy-right " ?right crlf))
 
 (defrule DEVICE::update-occupancy-left
   "update-occupancy-left"
   ?event <- (object (is-a OccupancyEvent)
                     (src-address ?address&~none)
-                    (side left)
-                    (occupancy ?new-left))
+                    (occupancy-left ?new-left&alarm|safe))
   ?device <- (object (is-a PirPanel)
                      (address ?address)
                      (luminance ?lumi)
@@ -99,8 +100,7 @@
   "update-occupancy-right"
   ?event <- (object (is-a OccupancyEvent)
                     (src-address ?address&~none)
-                    (side right)
-                    (occupancy ?new-right))
+                    (occupancy-right ?new-right&alarm|safe))
   ?device <- (object (is-a PirPanel)
                      (address ?address)
                      (luminance ?lumi)

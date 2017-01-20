@@ -48,14 +48,14 @@
 (defclass MAIN::OccupancyEvent
   "MAIN::OccupancyEvent, always form PirPanel device"
   (is-a Event)
-  (slot side
+  (slot occupancy-left
         (type SYMBOL)
-        (allowed-values left right)
-        (default ?NONE))
-  (slot occupancy
+        (allowed-values safe alarm unknown)
+        (default unknown))
+  (slot occupancy-right
         (type SYMBOL)
-        (allowed-values safe alarm)
-        (default ?NONE)))
+        (allowed-values safe alarm unknown)
+        (default unknown)))
 
 (defclass MAIN::LuminanceEvent
   "MAIN::LuminanceEvent, to update the luminance of PirPanel"
