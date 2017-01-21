@@ -120,7 +120,9 @@
                      (luminance ?old-lum&~?new-lum))
   =>
   (send ?device put-luminance ?new-lum)
-  (printout t "updated lum to: " ?new-lum " src-address: " ?address crlf))
+  (printout t
+            "updated pirs luminance from " ?old-lum
+            " to " ?new-lum ", pirs uuid:" ?address crlf))
 
 (defrule DEVICE::process-device-offline
   "DEVICE::process-device-offline"
