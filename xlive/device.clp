@@ -69,6 +69,10 @@
         (type SYMBOL)
         (default closed)        
         (allowed-values opened closed)
+        (create-accessor read-write))
+  (slot temperature
+        (type INTEGER)
+        (default -100)
         (create-accessor read-write)))
 
 (defrule DEVICE::print-occupancy
