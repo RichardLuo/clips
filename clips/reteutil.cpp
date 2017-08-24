@@ -575,7 +575,30 @@ globle struct partialMatch *MergePartialMatches(
   struct partialMatch *rhsBind)
   {
    struct partialMatch *linker;
-   static struct partialMatch mergeTemplate = { 1 }; /* betaMemory is TRUE, remainder are 0 or NULL */
+   // betaMemory is TRUE, remainder are 0 or NULL
+   static struct partialMatch mergeTemplate = {
+       .betaMemory = 1,
+       .busy = 0,
+       .rhsMemory = 0,
+       .bcount = 0,
+       .hashValue = 0,
+       .owner = NULL,
+       .marker = NULL,
+       .dependents = NULL,
+       .nextInMemory = NULL,
+       .prevInMemory = NULL,
+       .children = NULL,
+       .rightParent = NULL,
+       .nextRightChild = NULL,
+       .prevRightChild = NULL,
+       .leftParent = NULL,
+       .nextLeftChild = NULL,
+       .prevLeftChild = NULL,
+       .blockList = NULL,
+       .nextBlocked = NULL,
+       .prevBlocked = NULL,
+       .binds = { NULL }
+   };
   
    /*=================================*/
    /* Allocate the new partial match. */
