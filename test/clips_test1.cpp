@@ -43,7 +43,7 @@ static int test_devices() {
     // result.value = EnvAddExternalAddress(theEnv, theEnv, C_POINTER_EXTERNAL_ADDRESS);
     EnvDirectPutSlot(theEnv, pir1, "address", &result);
 
-    LOGFL("================ pir1:%ld pir2:%ld ================", (long)pir1, (long)pir2);
+    LOGW("================ pir1:%ld pir2:%ld ================", (long)pir1, (long)pir2);
     
     DATA_OBJECT insdata;
     SetType(insdata, INSTANCE_ADDRESS);
@@ -53,7 +53,7 @@ static int test_devices() {
     SetType(insdata, INSTANCE_ADDRESS);
     SetValue(insdata, pir2);
     EnvSend(theEnv, &insdata, "print", NULL, &result);
-    // LOGFL("================ test_devices ================");
+    // LOGW("================ test_devices ================");
 
     return 0;
 }
@@ -214,7 +214,7 @@ int test_EnvSend (int argc, char *argv[]) {
         SetType(insdata, INSTANCE_ADDRESS);
         SetValue(insdata, myInstancePtr);
         str = buf;
-        LOGFL("s: [%s]", str.c_str());
+        LOGW("s: [%s]", str.c_str());
         // EnvSend(theEnv, &insdata, "my-msg", "1 abc 3", &rtn);
         EnvSend(theEnv, &insdata, "my-msg", str.c_str(), &rtn);
     }
