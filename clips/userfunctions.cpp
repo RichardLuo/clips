@@ -49,6 +49,7 @@
 #include <math.h>
 #include <string>
 #include <vector>
+#include <utils/Log.h>
 
 #include "consts/consts.h"
 #include "service/ActionDesc.h"
@@ -231,7 +232,7 @@ class Foo {
         /* Check for exactly one argument. */
         /*=================================*/
         if (EnvArgCountCheck(environment, "ins-addr", EXACTLY, 1) == -1) {
-            fprintf(stderr, "ERR: on EnvArgCountCheck \n");
+            LOGW("ERR: on EnvArgCountCheck");
             return -1;
         }
 
@@ -240,14 +241,14 @@ class Foo {
         /*======================================================*/
         DATA_OBJECT arg;
         if (EnvArgTypeCheck(environment, "ins-addr", 1, INSTANCE_ADDRESS, &arg) == FALSE) {
-            fprintf(stderr, "ERR: on EnvArgTypeCheck");
+            LOGW("ERR: on EnvArgTypeCheck");
             return -1;
         }
 
         void *actions = DOToPointer(arg);
         EnvDirectGetSlot(environment, actions, "address", &arg);
         const char *str = DataObjectToString(environment, &arg);
-        fprintf(stderr, "got the str: %s \n", str);
+        LOGW("got the str: %s", str);
 
         return 0;
     }
@@ -269,14 +270,14 @@ class Foo {
         std::vector<ActionDesc> action_list;
         for (long i = GetDOBegin(arg); i <= end; i++) {
             if ((GetMFType(multi_field_ptr, i) != INSTANCE_NAME)) {
-                fprintf(stderr, "ERR: %ld is not a INSTANCE_NAME \n", i);                
+                LOGW("ERR: %ld is not a INSTANCE_NAME", i);                
                 continue;
             }
 
             const char *name = ValueToString(GetMFValue(multi_field_ptr, i));
             void *action = EnvFindInstance(environment, NULL, name, TRUE);
             if (action == NULL) {
-                fprintf(stderr, "ERR: no action, on EnvFindInstance \n");
+                LOGW("ERR: no action, on EnvFindInstance");
                 continue;
             }
 
@@ -287,15 +288,15 @@ class Foo {
             if (method == "set-on-off") {
                 EnvDirectGetSlot(environment, action, "on-off-cmd", &arg);
                 const std::string command = DataObjectToString(environment, &arg);
-                fprintf(stderr, "OKK: method %s, address %s, on-off-cmd %s \n", method.c_str(), address.c_str(), command.c_str());
+                LOGW("OK: method %s, address %s, on-off-cmd %s", method.c_str(), address.c_str(), command.c_str());
                 action_list.push_back(ActionDesc(VD_ON_OFF, address.c_str(), atoi(command.c_str())));
             } else if (method == "set-alert-level") {
                 EnvDirectGetSlot(environment, action, "alert-level", &arg);
                 const std::string alert_level = DataObjectToString(environment, &arg);
-                fprintf(stderr, "OKK: method %s, address %s, alert_level %s \n", method.c_str(), address.c_str(), alert_level.c_str());
+                LOGW("OK: method %s, address %s, alert_level %s", method.c_str(), address.c_str(), alert_level.c_str());
                 action_list.push_back(ActionDesc(VD_ALERT_SET_LEVEL, address.c_str(), atoi(alert_level.c_str())));
             } else {
-                fprintf(stderr, "ERR: unknown-method %s, address %s \n", method.c_str(), address.c_str());
+                LOGE("ERR: unknown-method %s, address %s", method.c_str(), address.c_str());
             }
             BM::getInstance().fireActions(action_list);
         }
