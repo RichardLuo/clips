@@ -13,8 +13,8 @@ common_LOCAL_C_INCLUDES := \
 
 common_LOCAL_SHARED_LIBRARIES := \
 	libXEngine \
-	libLiveConsts \
 	libZigbeeService \
+	libLiveConsts \
 	libutils \
 	libcutils \
 	liblog \

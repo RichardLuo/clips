@@ -17,6 +17,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/../
 LOCAL_SHARED_LIBRARIES := \
 	libXEngine \
 	libZigbeeService \
+	libLiveConsts \
 	libutils \
 	libcutils \
 	libbinder \

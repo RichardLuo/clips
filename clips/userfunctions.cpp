@@ -289,12 +289,12 @@ class Foo {
                 EnvDirectGetSlot(environment, action, "on-off-cmd", &arg);
                 const std::string command = DataObjectToString(environment, &arg);
                 LOGW("OK: method %s, address %s, on-off-cmd %s", method.c_str(), address.c_str(), command.c_str());
-                action_list.push_back(ActionDesc(VD_ON_OFF, address.c_str(), atoi(command.c_str())));
+                action_list.push_back(ActionDesc(address, VD_ON_OFF_STATUS, atoi(command.c_str())));
             } else if (method == "set-alert-level") {
                 EnvDirectGetSlot(environment, action, "alert-level", &arg);
                 const std::string alert_level = DataObjectToString(environment, &arg);
                 LOGW("OK: method %s, address %s, alert_level %s", method.c_str(), address.c_str(), alert_level.c_str());
-                action_list.push_back(ActionDesc(VD_ALERT_SET_LEVEL, address.c_str(), atoi(alert_level.c_str())));
+                action_list.push_back(ActionDesc(address, VD_ALERT_LEVEL, atoi(alert_level.c_str())));
             } else {
                 LOGE("ERR: unknown-method %s, address %s", method.c_str(), address.c_str());
             }
