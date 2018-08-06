@@ -110,8 +110,8 @@
   (slot src-address)
   (slot luminance
         (type INTEGER)
-        (default 10000)
-        (range -200 10000)))
+        (default 100000)
+        (range 0 100000)))
 
 (defrule BINDING::process-pir-binding-left
   "BINDING::process-pir-binding-left"
