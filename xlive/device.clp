@@ -75,6 +75,15 @@
         (default -100)
         (create-accessor read-write)))
 
+(defclass WindowCovering
+  "WindowCovering, a logic device"
+  (is-a Device)
+  (slot percent-status
+        (type INTEGER)
+        (range 0 100)
+        (default 0)
+        (create-accessor read-write)))
+
 (defrule DEVICE::print-occupancy
   "print-occupancy"
   ?event <- (object (is-a OccupancyEvent)
