@@ -18,7 +18,7 @@
         (default ?NONE))
   (slot method
         (type SYMBOL)
-        (allowed-values set-on-off set-alert-level)
+        (allowed-values set-on-off set-alert-level set-wc-current-lift-percent)
         (default ?NONE))
   (slot on-off-cmd
         (type SYMBOL)
@@ -27,5 +27,9 @@
   (slot alert-level
         (type INTEGER)
         (range -1 100)
-        (default -1)))
+        (default -1))
+  (slot wc-current-lift-percent
+        (type INTEGER)
+        (range 0 100)
+        (default 0)))
 
