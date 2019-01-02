@@ -45,6 +45,13 @@
         (allowed-values opened closed)
         (default ?NONE)))
 
+(defclass MAIN::KnobEvent
+  "MAIN::KnobEvent"
+  (is-a Event)
+  (slot last-knob-angle
+        (type INTEGER)
+        (default ?NONE)))
+
 (defclass MAIN::OccupancyEvent
   "MAIN::OccupancyEvent, always form PirPanel device"
   (is-a Event)

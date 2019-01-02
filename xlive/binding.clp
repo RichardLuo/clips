@@ -103,6 +103,22 @@
   (send ?binding put-status activated)
   (printout t "activated OpenCloseBinding src-address: " ?address " binding-dir " ?dir crlf))
 
+(defclass BINDING::SmartKnobBinding
+  "BINDING::SmartKnobBinding"
+  (is-a Binding)
+  (slot src-address))
+
+(defrule BINDING::process-smart-knob-binding
+  "BINDING::process-smart-knob-binding"
+  (object (is-a KnobEvent)
+          (src-address ?address&~none))
+  ?binding <- (object (is-a SmartKnobBinding)
+                      (enabled true)
+                      (src-address ?address))
+  =>
+  (send ?binding put-status activated)
+  (printout t "activated SmartKnobBinding src-address: " ?address crlf))
+
 
 (defclass BINDING::PirPanelBinding
   "BINDING::PirPanelBinding"

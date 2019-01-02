@@ -84,6 +84,14 @@
         (default 0)
         (create-accessor read-write)))
 
+(defclass SmartKnob
+  "SmartKnob, a logic device"
+  (is-a Device)
+  (slot last-knob-angle
+        (type INTEGER)
+        (default 0)
+        (create-accessor read-write)))
+
 (defrule DEVICE::print-occupancy
   "print-occupancy"
   ?event <- (object (is-a OccupancyEvent)
